@@ -17,16 +17,34 @@
           <a href="#"><img src="img/logom.png" width="40" style="margin-left: 2em"></a>
         </div>
       </nav>
-      <div class="body-wrapper">
+      <div class="body-wrapper row">
+
         <!-- some intro and info about the bot -->
         <div class="greeting">
           <h1 class="center-align">Hi, I'm Stanley ... </h1>
         </div>
+
         <!-- upload image -->
-        <div class="">
+        <div class="col s4 offset-s4">
+          <!-- uploaded image shows up here -->
+          <img src="">
+
+          <!-- ask user to upload image -->
+          <form action="#">
+            <div class="file-field input-field">
+              <div class="btn">
+                <span>Show me your photo</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+              </div>
+            </div>
+          </form>
         </div>
+
         <!-- Hidden At First: result of the bot image recognition -->
-        <div class="">
+        <div class="col s12 hide">
           <h2 class="center-align">I see that "so and so" is in your image </h2>
         </div>
       </div>
