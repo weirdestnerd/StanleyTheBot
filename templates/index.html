@@ -1,11 +1,10 @@
-
   <!DOCTYPE html>
   <html>
     <head>
       <!--Import Google Icon Font-->
       <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!--Import materialize.css-->
-      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css') }}"  media="screen,projection"/>
 
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -14,36 +13,36 @@
     <body>
       <nav>
         <div class="nav-wrapper">
-          <a href="#"><img src="img/logom.png" width="40" style="margin-left: 2em"></a>
+          <a href="#"><img src="{{ url_for('static', filename='img/logom.png') }}" width="40" style="margin-left: 2em"></a>
         </div>
       </nav>
       <div class="body_wrapper row">
-        
+
         <!-- some intro and info from the bot -->
         <div id="bot_talk">
-          <!-- {% block ... %} {% endblock %} -->
+          {# {% block ... %} {% endblock %} #}
         </div>
 
         <!-- image upload and processing -->
         <div id="image_processed">
-          <!-- uploaded image shows up here
-          {% block ... %} {% endblock %} -->
+          {# uploaded image shows up here
+          {% block ... %} {% endblock %} #}
         </div>
 
         <div id="user_button">
-          <!-- ask user to upload image
-          {% block ... %} {% endblock %} -->
+          {# ask user to upload image
+          {% block ... %} {% endblock %} #}
         </div>
 
         <div id="ranking">
-          <!-- show some ranking for the categories found in images
-          {% block ... %} {% endblock %} -->
+          {# show some ranking for the categories found in images
+          {% block ... %} {% endblock %} #}
         </div>
 
       </div> <!-- end body_wrapper -->
 
       <!--Import jQuery before materialize.js-->
       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-      <script type="text/javascript" src="js/materialize.min.js"></script>
+      <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
     </body>
   </html>
