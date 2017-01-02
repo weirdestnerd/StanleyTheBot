@@ -17,37 +17,31 @@
           <a href="#"><img src="img/logom.png" width="40" style="margin-left: 2em"></a>
         </div>
       </nav>
-      <div class="body-wrapper row">
-
-        <!-- some intro and info about the bot -->
-        <div class="greeting">
-          <h1 class="center-align">Hi, I'm Stanley ... </h1>
+      <div class="body_wrapper row">
+        
+        <!-- some intro and info from the bot -->
+        <div id="bot_talk">
+          <!-- {% block ... %} {% endblock %} -->
         </div>
 
-        <!-- upload image -->
-        <div class="col s4 offset-s4">
-          <!-- uploaded image shows up here -->
-          <img src="">
-
-          <!-- ask user to upload image -->
-          <form action="#">
-            <div class="file-field input-field">
-              <div class="btn">
-                <span>Show me your photo</span>
-                <input type="file">
-              </div>
-              <div class="file-path-wrapper">
-                <input class="file-path validate" type="text">
-              </div>
-            </div>
-          </form>
+        <!-- image upload and processing -->
+        <div id="image_processed">
+          <!-- uploaded image shows up here
+          {% block ... %} {% endblock %} -->
         </div>
 
-        <!-- Hidden At First: result of the bot image recognition -->
-        <div class="col s12 hide">
-          <h2 class="center-align">I see that "so and so" is in your image </h2>
+        <div id="user_button">
+          <!-- ask user to upload image
+          {% block ... %} {% endblock %} -->
         </div>
-      </div>
+
+        <div id="ranking">
+          <!-- show some ranking for the categories found in images
+          {% block ... %} {% endblock %} -->
+        </div>
+
+      </div> <!-- end body_wrapper -->
+
       <!--Import jQuery before materialize.js-->
       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
       <script type="text/javascript" src="js/materialize.min.js"></script>
