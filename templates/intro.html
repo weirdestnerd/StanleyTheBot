@@ -1,12 +1,23 @@
 {% extends "index.html" %}
-{% block body %}
- 
-<div class="block1">
-<h1>Hello {{name}}!</h1>
-  <h2>Here is an interesting quote for you: </h2>
-  <p>
-"The limits of my language are the limits of my mind. All I know is what I have words for."
-  </p>
-<img src="http://www.naturalprogramming.com/images/smilingpython.gif">
-</div>
+
+{% block intro %}
+ <h1 class="center-align">Hi, I'm Stanley</h1>
+{% endblock %}
+
+{% block button %}
+<form action="analyize" method="post" enctype=multipart/form-data>
+  <div class="file-field input-field">
+    <div class="btn">
+      <span>Show me your photo</span>
+      <input type="file" name="img_to_process" id="img_to_process" accept="image/*">
+    </div>
+    <div class="file-path-wrapper">
+      <input class="file-path validate" type="text" placeholder="I can understand JPEG and PNG type photos">
+    </div>
+    <input class="hide" id="hiddenUrl" name="hiddenUrl" type="text">
+  </div>
+  <button class="btn waves-effect waves-light disabled" id="analyize" type="submit" name="action">Analyize
+    <i class="material-icons right">send</i>
+  </button>
+</form>
 {% endblock %}

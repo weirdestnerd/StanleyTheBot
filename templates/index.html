@@ -5,7 +5,18 @@
       <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!--Import materialize.css-->
       <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css') }}"  media="screen,projection"/>
-
+      <script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
+      <script>
+        // Initialize Firebase
+        var config = {
+          apiKey: "AIzaSyBNN3izvd_eVexM1c0Fl2WZCJK20MvHnsU",
+          authDomain: "stanleythebot-8c6b0.firebaseapp.com",
+          databaseURL: "https://stanleythebot-8c6b0.firebaseio.com",
+          storageBucket: "stanleythebot-8c6b0.appspot.com",
+          messagingSenderId: "499020982163"
+        };
+        firebase.initializeApp(config);
+      </script>
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
@@ -20,7 +31,7 @@
 
         <!-- some intro and info from the bot -->
         <div id="bot_talk">
-          {# {% block ... %} {% endblock %} #}
+          {% block intro %} {% endblock %}
         </div>
 
         <!-- image upload and processing -->
@@ -30,8 +41,8 @@
         </div>
 
         <div id="user_button">
-          {# ask user to upload image
-          {% block ... %} {% endblock %} #}
+          <!-- ask user to upload image -->
+          {% block button %} {% endblock %}
         </div>
 
         <div id="ranking">
@@ -44,5 +55,22 @@
       <!--Import jQuery before materialize.js-->
       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
       <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
+      <script>
+        function run() {
+          var imageSubmit = document.getElementById('img_to_process')
+          imageSubmit.addEventListener('change', e => {
+            image = e.target.files[0]
+            var imageRef = firebase.storage().ref('images/' + image.name)
+            uploadTask = imageRef.put(image)
+            uploadTask.on('state_changed',
+              function() {
+                console.log("done uploading");
+                document.getElementById('hiddenUrl').value = uploadTask.snapshot.downloadURL;
+                document.getElementById('analyize').classList.remove('disabled')
+              })
+          })
+        }
+        run()
+      </script>
     </body>
   </html>

@@ -1,0 +1,21 @@
+{% extends "index.html" %}
+
+{% block intro %}
+ <h1 class="center-align">Your image is uploaded</h1>
+ <img src="{{imgURL}}">
+ <p>{{regc}}</p>
+{% endblock %}
+
+{% block button %}
+<form action="#">
+  <div class="file-field input-field">
+    <div class="btn">
+      <span>Another photo</span>
+      <input type="file" accept="image/*">
+    </div>
+    <div class="file-path-wrapper">
+      <input class="file-path validate" type="text" placeholder="I can understand JPEG and PNG type photos">
+    </div>
+  </div>
+</form>
+{% endblock %}
