@@ -15,7 +15,7 @@ def index():
 def img_upload():
     imageUrl = request.form['hiddenUrl']
     regc = json.dumps(visual_recognition.classify(images_url=str(imageUrl)), indent=2)
-    return render_template('info.html', regc=regc, imgURL=str(imageUrl))
+    return render_template('info.html', imgURL=str(imageUrl))
 
 if __name__ == "__main__":
     app.run()

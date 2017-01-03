@@ -62,10 +62,17 @@
             image = e.target.files[0]
             var imageRef = firebase.storage().ref('images/' + image.name)
             uploadTask = imageRef.put(image)
-            uploadTask.on('state_changed',
+            uploadTask.on('state_changed', snapshot => {
+              document.getElementById('loader').classList.remove('hide')
+              var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              console.log('Upload is ' + progress + '% done');
+              if (progress == 100) {
+                document.getElementById('loader').classList.add('hide')
+              }
+            }, error => {},
               function() {
                 console.log("done uploading");
-                document.getElementById('hiddenUrl').value = uploadTask.snapshot.downloadURL;
+                console.log(document.getElementById('hiddenUrl').value = uploadTask.snapshot.downloadURL);
                 document.getElementById('analyize').classList.remove('disabled')
               })
           })
