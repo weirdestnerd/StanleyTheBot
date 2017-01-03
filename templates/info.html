@@ -3,11 +3,11 @@
 {% block intro %}
  <h1 class="center-align">Your image is uploaded</h1>
  <img src="{{imgURL}}">
- <p>{{regc}}</p>
+ <p>{{bot_say}}</p>
 {% endblock %}
 
 {% block button %}
-<form action="analyize" method="post" enctype=multipart/form-data>
+<form action="analyze" method="post" enctype=multipart/form-data>
   <div class="file-field input-field">
     <div class="btn">
       <span>Another photo</span>
