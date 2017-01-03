@@ -7,15 +7,19 @@
 {% endblock %}
 
 {% block button %}
-<form action="#">
+<form action="analyize" method="post" enctype=multipart/form-data>
   <div class="file-field input-field">
     <div class="btn">
       <span>Another photo</span>
-      <input type="file" accept="image/*">
+      <input type="file" name="img_to_process" id="img_to_process" accept="image/*">
     </div>
     <div class="file-path-wrapper">
       <input class="file-path validate" type="text" placeholder="I can understand JPEG and PNG type photos">
     </div>
+    <input class="hide" id="hiddenUrl" name="hiddenUrl" type="text">
   </div>
+  <button class="btn waves-effect waves-light disabled" id="analyize" type="submit" name="action">Analyize
+    <i class="material-icons right">send</i>
+  </button>
 </form>
 {% endblock %}
