@@ -7,7 +7,7 @@ from watson_developer_cloud import VisualRecognitionV3
 visual_recognition = VisualRecognitionV3('2016-05-20', api_key='c6f25fcfd00c3ad03ffa283a79eb2e5490874d02')
 
 app = Flask(__name__)
-app.config.from_object(os.environ['APP_SETTINGS'])
+#app.config.from_object(os.environ['APP_SETTINGS'])
 
 @app.route("/")
 def index():
@@ -56,7 +56,7 @@ def img_upload():
     return render_template('info.html', bot_say = bot_say, imgURL=imageUrl)
 
 def parse_faces(list_of_faces):
-    return "there are face(s) in this photo"
+    return "there is face(s) in this photo"
 
 def parse_classify(list_of_scores_and_classes):
     string = ""
