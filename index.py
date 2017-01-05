@@ -14,6 +14,11 @@ def index():
     #show welcome page
     return render_template('intro.html')
 
+@app.route("/get_user_name", methods=['GET', 'POST'])
+def get_user_name():
+    user_name = str(request.form['user_name'])
+    return render_template('info.html', user_name = user_name)
+
 #analyze given image
 @app.route("/analyze", methods=['GET', 'POST'])
 def img_upload():
@@ -61,7 +66,7 @@ def parse_faces(list_of_faces):
 def parse_classify(list_of_scores_and_classes):
     string = ""
     for dictionary in list_of_scores_and_classes:
-        string = string + " " + dictionary['class']
+        string = string + ", " + dictionary['class']
     return "there is " + string + " in this photo"
 
 if __name__ == "__main__":
