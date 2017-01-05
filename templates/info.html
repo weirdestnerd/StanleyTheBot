@@ -1,28 +1,62 @@
 {% extends "index.html" %}
 
-{% block intro %}
- <h1 class="center-align">Your image is uploaded</h1>
- <img src="{{imgURL}}">
- <p>{{bot_say}}</p>
+{% block bot %}
+<div class="typewriter">
+  <h5 class="center-align">Hi {{user_name}}, give me a photo and I can tell you the contents of the photo. Go ahead!</h5>
+</div>
 {% endblock %}
 
-{% block button %}
+{% block user %}
 <form action="analyze" method="post" enctype=multipart/form-data>
   <div class="file-field input-field">
-    <div class="btn">
-      <span>Another photo</span>
       <input type="file" name="img_to_process" id="img_to_process" accept="image/*">
-    </div>
     <div class="file-path-wrapper">
-      <input class="file-path validate" type="text" placeholder="I can understand JPEG and PNG type photos">
+      <input class="file-path validate" type="text" placeholder="">
     </div>
     <div id="loader" class="progress hide">
       <div class="indeterminate"></div>
   </div>
     <input class="hide" id="hiddenUrl" name="hiddenUrl" type="text">
   </div>
-  <button class="btn waves-effect waves-light disabled" id="analyize" type="submit" name="action">Analyize
+  <button class="btn waves-effect waves-light disabled" id="analyize" type="submit" name="action">
     <i class="material-icons right">send</i>
   </button>
 </form>
+<script>
+    //wait to typing animation, then allow user input
+    setTimeout(function () {
+      document.getElementById('user_name').removeAttribute('disabled')
+    }, 5000);
+    //get element
+    var imageSubmit = document.getElementById('img_to_process')
+    //when image is chosen
+    imageSubmit.addEventListener('change', e => {
+      //get the image chosen
+      image = e.target.files[0]
+      //reference to firebase storage
+      var imageRef = firebase.storage().ref('images/' + image.name)
+      //upload chosen image to firebase storage
+      uploadTask = imageRef.put(image)
+      //while the image is uploading
+      uploadTask.on('state_changed', snapshot => {
+        //show loading animation
+        document.getElementById('loader').classList.remove('hide')
+        //get upload status
+        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        //when upload is done
+        if (progress == 100) {
+          //remove the loading animation
+          document.getElementById('loader').classList.add('hide')
+        }
+      }, error => {//if there's an error
+    },//what to do when upload is done
+        function() {
+          console.log("done uploading");
+          //add the URL to the image to the hidden input
+          document.getElementById('hiddenUrl').value = uploadTask.snapshot.downloadURL
+          //make button clickable
+          document.getElementById('analyize').classList.remove('disabled')
+        })
+    })
+</script>
 {% endblock %}

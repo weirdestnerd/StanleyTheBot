@@ -1,28 +1,48 @@
 {% extends "index.html" %}
 
-{% block intro %}
+{% block bot %}
 <div class="typewriter">
-  <h1 class="center-align">Hi, I'm Stanley,</h1>
+  <h5 class="center-align">Hi, I'm Stanley. What's your name?</h5>
 </div>
 {% endblock %}
 
-{% block button %}
-<form action="analyze" method="post" enctype=multipart/form-data>
-  <div class="file-field input-field">
-    <div class="btn">
-      <span>Show me your photo</span>
-      <input type="file" name="img_to_process" id="img_to_process" accept="image/*">
-    </div>
-    <div class="file-path-wrapper">
-      <input class="file-path validate" type="text" placeholder="I can understand JPEG and PNG type photos">
-    </div>
-    <div id="loader" class="progress hide">
-      <div class="indeterminate"></div>
+{% block user %}
+<form action="get_user_name" method="post" enctype="multipart/form-data">
+  <div class="input-field col s12">
+    <input disabled name="user_name" placeholder="" id="user_name" type="text" class="validate">
+    <label id="time_of_the_day"></label>
+    <button class="btn waves-effect waves-light disabled" id="send_user_name" type="submit" name="action">
+      <i class="material-icons right">send</i>
+    </button>
   </div>
-    <input class="hide" id="hiddenUrl" name="hiddenUrl" type="text">
-  </div>
-  <button class="btn waves-effect waves-light disabled" id="analyize" type="submit" name="action">Analyize
-    <i class="material-icons right">send</i>
-  </button>
 </form>
+<script>
+  //wait to typing animation, then allow user input
+  setTimeout(function () {
+    document.getElementById('user_name').removeAttribute('disabled')
+  }, 5000);
+  //show current time on top of user input
+  show_time = document.getElementById('time_of_the_day')
+  d = new Date()
+  show_time.innerHTML = d.getHours() + " : " + d.getMinutes()
+  //try not to reload page
+
+  //activate button
+  input = document.getElementById('user_name')
+  input.addEventListener('change', function() {
+    if (input.value != "") {
+      document.getElementById('send_user_name').classList.remove('disabled')
+    }
+    else {
+      document.getElementById('send_user_name').classList.add('disabled')
+      $.post({
+          url: "{{ url_for("get_user_name") }}",
+          success: function(data) {
+              console.log(data);
+          },
+          error: function() { console.log("Error", arguments); }
+      });
+    }
+  })
+</script>
 {% endblock %}

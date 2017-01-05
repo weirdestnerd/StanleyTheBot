@@ -17,33 +17,28 @@
         };
         firebase.initializeApp(config);
       </script>
+      <!--Import jQuery before materialize.js-->
+      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+      <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
       <style>
-        /* DEMO-SPECIFIC STYLES */
-        .typewriter h1 {
-          width: 80%;
-          overflow: hidden; /* Ensures the content is not revealed until the animation */
-          /*border-right: .15em solid black;  The typwriter cursor */
-          white-space: nowrap; /* Keeps the content on a single line */
-          margin: 0 auto; /* Gives that scrolling effect as the typing happens */
-          letter-spacing: .15em; /* Adjust as needed */
-          animation:
-            typing 3.5s steps(40, end),
-            blink-caret .75s step-end infinite;
-        }
+      .typewriter
+      {
+          width: 100%;
+          white-space:nowrap;
+          overflow:hidden;
+          -webkit-animation: type 5s steps(50, end);
+          animation: type 5s steps(50, end);
+      }
 
-        /* The typing effect */
-        @keyframes typing {
-          from { width: 0 }
-          to { width: 100% }
-        }
+      @keyframes type{
+          from { width: 0; }
+      }
 
-        /* The typewriter cursor effect */
-        @keyframes blink-caret {
-          from, to { border-color: transparent }
-          50% { border-color: orange; }
-        }
+      @-webkit-keyframes type{
+          from { width: 0; }
+      }
       </style>
     </head>
 
@@ -53,22 +48,18 @@
           <a href="#"><img src="{{ url_for('static', filename='img/logom.png') }}" width="40" style="margin-left: 2em"></a>
         </div>
       </nav>
-      <div class="body_wrapper row">
-
-        <!-- some intro and info from the bot -->
-        <div class="col s12" id="bot_talk">
-          {% block intro %} {% endblock %}
+      <div class="body_wrapper">
+        <div class="row">
+          <!-- some intro and info from the bot -->
+          <div class="col s12 m6 l6" id="bot_talk">
+            {% block bot %} {% endblock %}
+          </div>
         </div>
-
-        <!-- image upload and processing -->
-        <div id="image_processed">
-          {# uploaded image shows up here
-          {% block ... %} {% endblock %} #}
-        </div>
-
-        <div class="col s12" id="user_button">
-          <!-- ask user to upload image -->
-          {% block button %} {% endblock %}
+        <div class="row">
+          <div class="col s12 m6 l6 offset-m6 offset-l6" id="user_talk">
+            <!-- ask user to upload image -->
+            {% block user %} {% endblock %}
+          </div>
         </div>
 
         <div id="ranking">
@@ -77,45 +68,5 @@
         </div>
 
       </div> <!-- end body_wrapper -->
-
-      <!--Import jQuery before materialize.js-->
-      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-      <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
-      <script>
-        function run() {
-          //get element
-          var imageSubmit = document.getElementById('img_to_process')
-          //when image is chosen
-          imageSubmit.addEventListener('change', e => {
-            //get the image chosen
-            image = e.target.files[0]
-            //reference to firebase storage
-            var imageRef = firebase.storage().ref('images/' + image.name)
-            //upload chosen image to firebase storage
-            uploadTask = imageRef.put(image)
-            //while the image is uploading
-            uploadTask.on('state_changed', snapshot => {
-              //show loading animation
-              document.getElementById('loader').classList.remove('hide')
-              //get upload status
-              var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-              //when upload is done
-              if (progress == 100) {
-                //remove the loading animation
-                document.getElementById('loader').classList.add('hide')
-              }
-            }, error => {//if there's an error
-          },//what to do when upload is done
-              function() {
-                console.log("done uploading");
-                //add the URL to the image to the hidden input
-                document.getElementById('hiddenUrl').value = uploadTask.snapshot.downloadURL
-                //make button clickable
-                document.getElementById('analyize').classList.remove('disabled')
-              })
-          })
-        }
-        run()
-      </script>
     </body>
   </html>
