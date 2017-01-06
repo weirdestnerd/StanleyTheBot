@@ -2,7 +2,7 @@
 
 {% block bot %}
 <div class="typewriter">
-  <h5 class="center-align">Hi, I'm Stanley. What's your name?</h5>
+  <h5 id="bot_say" class="left-align">Hi, I'm Stanley. What's your name?</h5>
 </div>
 {% endblock %}
 
@@ -11,16 +11,11 @@
   <div class="input-field col s12">
     <input disabled name="user_name" placeholder="" id="user_name" type="text" class="validate">
     <label id="time_of_the_day"></label>
-    <button class="btn waves-effect waves-light disabled" id="send_user_name" type="submit" name="action">
-      <i class="material-icons right">send</i>
+    <button class="btn waves-effect waves-light disabled" id="send_user_name" type="submit" name="action"><i class="material-icons right">send</i>
     </button>
   </div>
 </form>
 <script>
-  //wait to typing animation, then allow user input
-  setTimeout(function () {
-    document.getElementById('user_name').removeAttribute('disabled')
-  }, 5000);
   //show current time on top of user input
   show_time = document.getElementById('time_of_the_day')
   d = new Date()

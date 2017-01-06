@@ -2,7 +2,7 @@
 
 {% block bot %}
 <div class="typewriter">
-  <h5 class="center-align">Hi {{user_name}}, give me a photo and I can tell you the contents of the photo. Go ahead!</h5>
+  <h5 id="bot_say" class="left-align">Hi {{user_name}}, give me a photo and I can tell you the contents of the photo. Go ahead!</h5>
 </div>
 {% endblock %}
 
@@ -11,15 +11,14 @@
   <div class="file-field input-field">
       <input type="file" name="img_to_process" id="img_to_process" accept="image/*">
     <div class="file-path-wrapper">
-      <input class="file-path validate" type="text" placeholder="">
+      <input class="file-path validate" type="text" placeholder="Pick a photo">
     </div>
     <div id="loader" class="progress hide">
       <div class="indeterminate"></div>
   </div>
     <input class="hide" id="hiddenUrl" name="hiddenUrl" type="text">
   </div>
-  <button class="btn waves-effect waves-light disabled" id="analyize" type="submit" name="action">
-    <i class="material-icons right">send</i>
+  <button class="btn waves-effect waves-light disabled" id="analyize" type="submit" name="action"><i class="material-icons right">send</i>
   </button>
 </form>
 <script>
