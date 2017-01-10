@@ -1,0 +1,30 @@
+{% extends "index.html" %}
+
+{% block bot %}
+<div class="img_wrapper" style="width: 50%; margin: 5%">
+  <img src="{{imgURL}}" width="50%" height="50%">
+</div>
+<div class="typewriter">
+  <h5> {{ bot_say}} </h5>
+</div>
+{% endblock %}
+
+{% block user %}
+<div class="">
+  <div class="chips user_chip_answer"></div>
+</div>
+<script>
+$('.user_chip_answer').material_chip({
+  data: [{
+    tag: "That's cool.",
+  }, {
+    tag: 'Good job, Stanley.',
+  }, {
+    tag: 'I like it.',
+  }],
+});
+$('.chips').on('chip.select', function(e, chip){
+    document.getElementById('user_chip_answer').value = chip
+  });
+</script>
+{% endblock %}
