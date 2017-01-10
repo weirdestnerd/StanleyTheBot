@@ -14,7 +14,7 @@ def index():
     #show welcome page
     return render_template('intro.html')
 
-@app.route("/get_user_name", methods=['GET', 'POST'])
+@app.route("/get_user_name", methods=['POST'])
 def get_user_name():
     user_name = str(request.form['user_name'])
     return render_template('info.html', user_name = user_name)
@@ -58,7 +58,7 @@ def img_upload():
                         continue
                 x += 1
         bot_say = parse_classify(list_of_scores_and_classes)
-    return render_template('info.html', bot_say = bot_say, imgURL=imageUrl)
+    return render_template('analyze.html', bot_say = bot_say, imgURL=imageUrl)
 
 def parse_faces(list_of_faces):
     return "there is face(s) in this photo"

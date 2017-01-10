@@ -1,7 +1,7 @@
 {% extends "index.html" %}
 
 {% block bot %}
-<div class="typewriter">
+<div class="typewriter col s12 m6 l6">
   <h5 id="bot_say" class="left-align">Hi, I'm Stanley. What's your name?</h5>
 </div>
 {% endblock %}
@@ -16,12 +16,20 @@
   </div>
 </form>
 <script>
+  //wait for animation to finish
+  setTimeout(function () {
+    document.getElementById('user_name').removeAttribute('disabled')
+  }, 3500);
   //show current time on top of user input
   show_time = document.getElementById('time_of_the_day')
   d = new Date()
   show_time.innerHTML = d.getHours() + " : " + d.getMinutes()
   //try not to reload page
-
+  document.getElementById('send_user_name').addEventListener('click', function() {
+    $.post(
+        "{{ url_for("get_user_name") }}"
+    );
+  })
   //activate button
   input = document.getElementById('user_name')
   input.addEventListener('change', function() {
@@ -30,13 +38,6 @@
     }
     else {
       document.getElementById('send_user_name').classList.add('disabled')
-      $.post({
-          url: "{{ url_for("get_user_name") }}",
-          success: function(data) {
-              console.log(data);
-          },
-          error: function() { console.log("Error", arguments); }
-      });
     }
   })
 </script>

@@ -1,8 +1,9 @@
-{% extends "index.html" %}
+{% extends "intro.html" %}
 
 {% block bot %}
-<div class="typewriter">
-  <h5 id="bot_say" class="left-align">Hi {{user_name}}, give me a photo and I can tell you the contents of the photo. Go ahead!</h5>
+
+<div class="typewriter col s12 m12 l12">
+  <h5 id="bot_say" class="left-align">Hi {{user_name}}, I can tell you the contents of a photo. Give me a photo to try.</h5>
 </div>
 {% endblock %}
 
@@ -24,8 +25,8 @@
 <script>
     //wait to typing animation, then allow user input
     setTimeout(function () {
-      document.getElementById('user_name').removeAttribute('disabled')
-    }, 5000);
+      document.getElementById('img_to_process').removeAttribute('disabled')
+    }, 3500);
     //get element
     var imageSubmit = document.getElementById('img_to_process')
     //when image is chosen
