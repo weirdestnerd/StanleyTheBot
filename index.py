@@ -61,7 +61,10 @@ def img_upload():
     return render_template('analyze.html', bot_say = bot_say, imgURL=imageUrl)
 
 def parse_faces(list_of_faces):
-    return "there is face(s) in this photo"
+    '''
+    parsing list_of_faces['age'], list_of_faces['gender'], list_of_faces['identity']
+    '''
+    return "There's a " + list_of_faces[0]['gender']['gender'] + " betweens ages " + str(list_of_faces[0]['age']['max']) + " and " + str(list_of_faces[0]['age']['min'])
 
 def parse_classify(list_of_scores_and_classes):
     string = ""
