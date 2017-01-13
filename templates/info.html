@@ -1,7 +1,9 @@
 {% extends "intro.html" %}
 
 {% block bot %}
-
+<div id="processing" class="progress hide">
+      <div class="indeterminate"></div>
+</div>
 <div class="typewriter col s12 m12 l12">
   <h5 id="bot_say" class="left-align">Hi {{user_name}}, I can tell you the contents of a photo. Give me a photo to try.</h5>
 </div>
@@ -57,6 +59,10 @@
           //make button clickable
           document.getElementById('analyize').classList.remove('disabled')
         })
+    })
+    //show processing
+    document.getElementById('analyize').addEventListener('click', function() {
+      document.getElementById('processing').classList.remove('hide')
     })
 </script>
 {% endblock %}
