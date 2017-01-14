@@ -12,6 +12,8 @@
 {% block user %}
 <div class="">
   <div class="chips user_chip_answer"></div>
+  <button class="btn waves-effect waves-light disabled" id="anotherone" type="submit" name="action"><i class="material-icons right">send</i>Try another photo
+  </button>
 </div>
 <script>
 $('.user_chip_answer').material_chip({
@@ -26,5 +28,10 @@ $('.user_chip_answer').material_chip({
 $('.chips').on('chip.select', function(e, chip){
     document.getElementById('user_chip_answer').value = chip
   });
+  document.getElementById('anotherone').addEventListener('click', function() {
+    $.post(
+        "{{ url_for("get_user_name") }}"
+    );
+  })
 </script>
 {% endblock %}
