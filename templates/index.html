@@ -24,7 +24,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
       <style>
-      .typewriter {
+      .typewritere {
         overflow: hidden; /* Ensures the content is not revealed until the animation */
         border-right: .15em solid #ee6e73; /* The typwriter cursor */
         white-space: nowrap; /* Keeps the content on a single line */
@@ -59,7 +59,7 @@
       <div class="body_wrapper">
         <div class="row">
           <!-- some intro and info from the bot -->
-          <div class="" id="bot_talk">
+          <div class="col s12 m6 l6" id="bot_talk">
             {% block bot %} {% endblock %}
           </div>
         </div>
@@ -69,8 +69,8 @@
             {% block user %} {% endblock %}
           </div>
         </div>
-        <div class="container">
-          {#% block example %} {% endblock %}
+        <div class="container-fluid">
+          {% block example %} {% endblock %}
         <div id="ranking">
           {# show some ranking for the categories found in images
           {% block ... %} {% endblock %} #}

@@ -66,7 +66,7 @@ def parse_faces(list_of_faces):
 
 def parse_classify(list_of_scores_and_classes):
     classes_in_string = ", ".join(dictionary['class'] for dictionary in list_of_scores_and_classes)
-    return "Here's what I see the this photo: " + classes_in_string
+    return "Here's what I see this photo: " + classes_in_string + "."
 
 def classify_age(age_max, age_min, gender):
     if age_min < 12:

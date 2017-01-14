@@ -30,7 +30,7 @@ $('.chips').on('chip.select', function(e, chip){
   });
   document.getElementById('anotherone').addEventListener('click', function() {
     $.post(
-        "{{ url_for("get_user_name") }}"
+        "{{ url_for(get_user_name") }}"
     );
   })
 </script>
