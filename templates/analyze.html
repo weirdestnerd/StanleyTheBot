@@ -1,19 +1,37 @@
-{% extends "index.html" %}
+{% extends "info.html" %}
 
-{% block bot %}
-<div class="img_wrapper" style="width: 50%; margin: 5%">
-  <img src="{{imgURL}}" width="50%" height="50%">
-</div>
-<div class="typewriter">
-  <h5> {{ bot_say}} </h5>
-</div>
-{% endblock %}
+{% block chat_interface %}
+{{super()}}
 
-{% block user %}
-<div class="">
-  <div class="chips user_chip_answer"></div>
-  <button class="btn waves-effect waves-light disabled" id="anotherone" type="submit" name="action"><i class="material-icons right">send</i>Try another photo
-  </button>
+<div class="row">
+  <div class="col s12 m6 l6 offset-m6 offset-l6">
+    <div class="row">
+      <div class="col s12 m6 l6 offset-m6 offset-l6">
+        <div class="card">
+         <div class="card-image">
+           <img src="{{imgURL}}">
+           <span class="card-title"></span>
+         </div>
+       </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col s12 m5">
+    <div class="card-panel red lighten-2">
+      <span id="bot_say" class="white-text">{{bot_say}}
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col s12 m6 l6 offset-m6 offset-l6">
+    <div class="chips user_chip_answer"></div>
+    <a href="/get_user_name" class="waves-effect waves-light btn-large">Try another photo</a>
+  </div>
 </div>
 <script>
 $('.user_chip_answer').material_chip({
@@ -28,10 +46,7 @@ $('.user_chip_answer').material_chip({
 $('.chips').on('chip.select', function(e, chip){
     document.getElementById('user_chip_answer').value = chip
   });
-  document.getElementById('anotherone').addEventListener('click', function() {
-    $.post(
-        "{{ url_for('get_user_name') }}"
-    );
-  })
 </script>
 {% endblock %}
+{% block user_input %}{% endblock %}
+{% block example %}{% endblock %}

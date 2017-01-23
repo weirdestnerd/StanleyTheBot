@@ -1,34 +1,50 @@
-{% extends "intro.html" %}
+{% extends "index.html" %}
 
-{% block bot %}
-<div id="processing" class="progress hide">
-      <div class="indeterminate"></div>
+{% block chat_interface %}
+{{super()}}
+<div class="row">
+  <div class="col s12 m6 l6 offset-m6 offset-l6">
+    <div class="row">
+      <div class="col s12 m6 l6 offset-m6 offset-l6">
+        <div class="card-panel red lighten-2">
+          <span id="user_say" class="white-text">{{user_name}}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-<div class="typewriter">
-  <h5 id="bot_say" class="left-align">Hi {{user_name}}, I can tell you the contents of a photo. Give me a photo to try.</h5>
+<div class="row">
+  <div class="col s12 m5">
+    <div class="card-panel red lighten-2">
+      <span id="bot_say" class="white-text">Hi {{user_name}}, I can tell you the contents of a photo. Give me a photo to try.
+      </span>
+    </div>
+  </div>
+</div>
+
+{% block user_input %}
+<div class="row">
+  <div class="col s12 m6 l6 offset-m6 offset-l6">
+    <form action="analyze" method="post" enctype=multipart/form-data>
+      <div class="file-field input-field">
+          <input type="file" name="img_to_process" id="img_to_process" accept="image/*">
+        <div class="file-path-wrapper">
+          <input class="file-path validate" type="text" placeholder="Pick a photo">
+        </div>
+        <div id="loader" class="progress hide">
+          <div class="indeterminate"></div>
+      </div>
+        <input class="hide" id="hiddenUrl" name="hiddenUrl" type="text">
+      </div>
+      <button class="btn waves-effect waves-light disabled" id="analyize" type="submit" name="action"><i class="material-icons right">send</i>
+      </button>
+    </form>
+  </div>
 </div>
 {% endblock %}
 
-{% block user %}
-<form action="analyze" method="post" enctype=multipart/form-data>
-  <div class="file-field input-field">
-      <input type="file" name="img_to_process" id="img_to_process" accept="image/*">
-    <div class="file-path-wrapper">
-      <input class="file-path validate" type="text" placeholder="Pick a photo">
-    </div>
-    <div id="loader" class="progress hide">
-      <div class="indeterminate"></div>
-  </div>
-    <input class="hide" id="hiddenUrl" name="hiddenUrl" type="text">
-  </div>
-  <button class="btn waves-effect waves-light disabled" id="analyize" type="submit" name="action"><i class="material-icons right">send</i>
-  </button>
-</form>
 <script>
-    //wait to typing animation, then allow user input
-    setTimeout(function () {
-      document.getElementById('img_to_process').removeAttribute('disabled')
-    }, 3500);
     //get element
     var imageSubmit = document.getElementById('img_to_process')
     //when image is chosen
@@ -60,10 +76,7 @@
           document.getElementById('analyize').classList.remove('disabled')
         })
     })
-    //show processing
-    document.getElementById('analyize').addEventListener('click', function() {
-      document.getElementById('processing').classList.remove('hide')
-    })
+
 </script>
 {% endblock %}
 

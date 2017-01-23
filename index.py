@@ -9,12 +9,14 @@ visual_recognition = VisualRecognitionV3('2016-05-20', api_key='c6f25fcfd00c3ad0
 app = Flask(__name__)
 #app.config.from_object(os.environ['APP_SETTINGS'])
 
+#TODO: cache user's name.
+
 @app.route("/")
 def index():
     #show welcome page
     return render_template('intro.html')
 
-@app.route("/get_user_name", methods=['POST'])
+@app.route("/get_user_name", methods=['GET', 'POST'])
 def get_user_name():
     user_name = str(request.form['user_name'])
     return render_template('info.html', user_name = user_name)

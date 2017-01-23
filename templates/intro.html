@@ -1,44 +1,17 @@
 {% extends "index.html" %}
 
-{% block bot %}
-<div class="typewriter">
-  <h5 id="bot_say" class="left-align">Hi, I'm Stanley. What's your name?</h5>
-</div>
-{% endblock %}
-
-{% block user %}
-<form action="get_user_name" method="post" enctype="multipart/form-data">
-  <div class="input-field col s12">
-    <input disabled name="user_name" placeholder="" id="user_name" type="text" class="validate">
-    <label id="time_of_the_day"></label>
-    <button class="btn waves-effect waves-light disabled" id="send_user_name" type="submit" name="action"><i class="material-icons right">send</i>
-    </button>
+{% block chat_interface %}
+{{super()}}
+<div class="row">
+  <div class="col s12 m6 l6 offset-m6 offset-l6" id="user_talk">
+    <form action="get_user_name" method="post" enctype="multipart/form-data">
+      <div class="input-field col s12">
+        <input name="user_name" placeholder="" id="user_name" type="text" class="validate">
+        <label id="time_of_the_day"></label>
+        <button class="btn waves-effect waves-light disabled" id="send_user_name" type="submit" name="action"><i class="material-icons right">send</i>
+        </button>
+      </div>
+    </form>
   </div>
-</form>
-<script>
-  //wait for animation to finish
-  setTimeout(function () {
-    document.getElementById('user_name').removeAttribute('disabled')
-  }, 3500);
-  //show current time on top of user input
-  show_time = document.getElementById('time_of_the_day')
-  d = new Date()
-  show_time.innerHTML = d.getHours() + " : " + d.getMinutes()
-  //try not to reload page
-  document.getElementById('send_user_name').addEventListener('click', function() {
-    $.post(
-        "{{ url_for("get_user_name") }}"
-    );
-  })
-  //activate button
-  input = document.getElementById('user_name')
-  input.addEventListener('change', function() {
-    if (input.value != "") {
-      document.getElementById('send_user_name').classList.remove('disabled')
-    }
-    else {
-      document.getElementById('send_user_name').classList.add('disabled')
-    }
-  })
-</script>
+</div>
 {% endblock %}

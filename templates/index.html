@@ -23,32 +23,6 @@
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
-      <style>
-      .typewritere {
-        overflow: hidden; /* Ensures the content is not revealed until the animation */
-        border-right: .15em solid #ee6e73; /* The typwriter cursor */
-        white-space: nowrap; /* Keeps the content on a single line */
-        margin: 0 auto; /* Gives that scrolling effect as the typing happens */
-        letter-spacing: .15em; /* Adjust as needed */
-        animation-delay:
-          blink-caret 3.5s;
-        animation:
-          typing 3.5s steps(40, end),
-          blink-caret .75s step-end infinite;
-      }
-
-      /* The typing effect */
-      @keyframes typing {
-        from { width: 0 }
-        to { width: 100% }
-      }
-
-      /* The typewriter cursor effect */
-      @keyframes blink-caret {
-        from, to { border-color: transparent }
-        50% { border-color: #ee6e73; }
-      }
-    </style>
     <body>
       <nav>
         <div class="nav-wrapper container">
@@ -57,18 +31,25 @@
         </div>
       </nav>
       <div class="body_wrapper">
+        <div id="processing" class="progress hide">
+              <div class="indeterminate"></div>
+        </div>
+        {% block chat_interface %}
         <div class="row">
           <!-- some intro and info from the bot -->
           <div class="col s12 m6 l6" id="bot_talk">
-            {% block bot %} {% endblock %}
+            <div class="row">
+              <div class="col s12 m5">
+                <div class="card-panel red lighten-2">
+                  <span id="bot_say" class="white-text">Hi, I'm Stanley. What's your name?
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col s12 m6 l6 offset-m6 offset-l6" id="user_talk">
-            <!-- ask user to upload image -->
-            {% block user %} {% endblock %}
-          </div>
-        </div>
+        {% endblock %}
+
         <div class="container-fluid">
           {% block example %} {% endblock %}
         <div id="ranking">
@@ -79,6 +60,23 @@
       </div> <!-- end body_wrapper -->
     </body>
     <script>
-
+      //show current time on top of user input
+      show_time = document.getElementById('time_of_the_day')
+      d = new Date()
+      show_time.innerHTML = d.getHours() + " : " + d.getMinutes()
+      //activate button
+      input = document.getElementById('user_name')
+      input.addEventListener('change', function() {
+        if (input.value != "") {
+          document.getElementById('send_user_name').classList.remove('disabled')
+        }
+        else {
+          document.getElementById('send_user_name').classList.add('disabled')
+        }
+      })
+      //show processing
+      document.getElementById('analyize').addEventListener('click', function() {
+        document.getElementById('processing').classList.remove('hide')
+      })
     </script>
   </html>
