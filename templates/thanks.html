@@ -1,40 +1,31 @@
-{% extends "info.html" %}
+{% extends "analyze.html" %}
 
 {% block chat_interface %}
 {{super()}}
-
 <div class="row">
   <div class="col s12 m6 l6 offset-m6 offset-l6">
     <div class="row">
       <div class="col s12 m6 l6 offset-m6 offset-l6">
-        <div class="card">
-         <div class="card-image">
-           <img src="{{imgURL}}">
-           <span class="card-title"></span>
-         </div>
-       </div>
+        <div class="card-panel red lighten-2">
+          <span id="user_say" class="white-text">Good job! Stanley
+          </span>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
 <div class="row">
   <div class="col s12 m5">
     <div class="card-panel red lighten-2">
-      <span id="bot_say" class="white-text">{{bot_say}}
+      <span id="bot_say" class="white-text">Thanks!
       </span>
     </div>
   </div>
 </div>
-
-{% block user_response %}
 <div class="row">
   <div class="col s12 m6 l6 offset-m6 offset-l6">
     <div class="row">
       <div class="chips col s12 m6 l6 offset-m6 offset-l6">
-        <div class="chip teal">
-          <a href="/compliment" class="white-text">Good job! Stanley</a>
-        </div>
         <div class="chip teal">
           <a href="/anotherone" class="white-text">Try another photo</a>
         </div>
@@ -44,6 +35,4 @@
 </div>
 {% endblock %}
 
-{% endblock %}
-{% block user_input %}{% endblock %}
-{% block example %}{% endblock %}
+{% block user_response %}{% endblock %}
