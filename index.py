@@ -1,5 +1,6 @@
 import os
 from flask import Flask, render_template, request
+from werkzeug.contrib.cache import SimpleCache
 from pattern.en import wordnet, pluralize, singularize
 from watson_developer_cloud import VisualRecognitionV3
 
@@ -8,18 +9,43 @@ visual_recognition = VisualRecognitionV3('2016-05-20', api_key='c6f25fcfd00c3ad0
 
 app = Flask(__name__)
 #app.config.from_object(os.environ['APP_SETTINGS'])
+cache = SimpleCache()
 
 #TODO: cache user's name.
+def cache_username(user_name):
+    return cache.set('current_user', user_name, timeout=30)
+def get_cached_username():
+    return cache.get('current_user') if cache.get('current_user') else False
+def cache_bot_img(bot_say, imageUrl):
+    cache.set('imageUrl', imageUrl, timeout=30)
+    return cache.set('bot_say', bot_say, timeout=30)
+def get_bot_say():
+    return cache.get('bot_say')
+def get_image_url():
+    return cache.get('imageUrl')
 
 @app.route("/")
 def index():
     #show welcome page
     return render_template('intro.html')
 
+@app.route("/compliment")
+def say_thanks():
+    if not get_cached_username():
+        return index()
+    return render_template('thanks.html', bot_say = get_bot_say(), imgURL = get_image_url(), user_name = get_cached_username())
+@app.route("/anotherone")
+def anotherone():
+    if not get_cached_username():
+        return index()
+    return render_template('anotherone.html', bot_say = get_bot_say(), imgURL = get_image_url(), user_name = get_cached_username())
 @app.route("/get_user_name", methods=['GET', 'POST'])
 def get_user_name():
     user_name = str(request.form['user_name'])
-    return render_template('info.html', user_name = user_name)
+    cache_username(user_name)
+    if not get_cached_username():
+        return index()
+    return render_template('info.html', user_name = get_cached_username())
 
 #analyze given image
 @app.route("/analyze", methods=['GET', 'POST'])
@@ -29,23 +55,34 @@ def img_upload():
 
     #IBM Watson classifies image and returns a dictionary
     #TODO: use try catch here, in case of an error
+    #in this case, try catch can't be used cos Watson doesn't return an error
+    #exception but a dictionary
+
     #IBM Watson checks for faces in the photo
     result_from_IBM_Watson = visual_recognition.detect_faces(images_url=imageUrl)
-    list_of_faces = result_from_IBM_Watson['images'][0]['faces']
     #if faces are found in the image
-    if list_of_faces:
-        bot_say = "I can see " + parse_faces(list_of_faces) + " in this photo."
+    if 'faces' in result_from_IBM_Watson['images'][0]:
+        bot_say = "I can see " + parse_faces(result_from_IBM_Watson['images'][0]['faces']) + " in this photo."
+    #if there was an error with the image
+    elif 'error' in result_from_IBM_Watson['images'][0]:
+        bot_say = "I'm sorry, I had some error with that photo. Try a different photo please."
     else:
         #TODO: use try catch here, in case of an error
+        #in this case, try catch can't be used cos Watson doesn't return an error
+        #exception but a dictionary
         result_from_IBM_Watson = visual_recognition.classify(images_url=imageUrl)
 
+        if 'error' in result_from_IBM_Watson['images'][0]:
+            bot_say = "I'm sorry, I had some error with that photo. Try a different photo please."
         #get list of dictionaries containing 'scores' and 'class' from 'result_from_IBM_Watson'
-        list_of_scores_and_classes = result_from_IBM_Watson['images'][0]['classifiers'][0]['classes']
-        #refine the result from IBM Watson
-        list_of_scores_and_classes = refine_classes(list_of_scores_and_classes)
-
-        bot_say = parse_classify(list_of_scores_and_classes)
-    return render_template('analyze.html', bot_say = bot_say, imgURL=imageUrl)
+        else:
+            #refine the result from IBM Watson
+            list_of_scores_and_classes = refine_classes(result_from_IBM_Watson['images'][0]['classifiers'][0]['classes'])
+            bot_say = parse_classify(list_of_scores_and_classes)
+    cache_bot_img(bot_say, imageUrl)
+    if not get_cached_username():
+        return index()
+    return render_template('analyze.html', bot_say = bot_say, imgURL=imageUrl, user_name = get_cached_username())
 
 def parse_faces(list_of_faces):
     '''
