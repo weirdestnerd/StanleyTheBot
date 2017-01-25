@@ -9,13 +9,13 @@ visual_recognition = VisualRecognitionV3('2016-05-20', api_key='c6f25fcfd00c3ad0
 
 app = Flask(__name__)
 #app.config.from_object(os.environ['APP_SETTINGS'])
-cache = MemcachedCache(['127.0.0.1:11211'])
+#cache = MemcachedCache(['127.0.0.1:11211'])
 
 #TODO: cache user's name.
 def cache_username(user_name):
-    return cache.set('current_user', user_name, timeout=60)
+    return mc.set('current_user', user_name, timeout=60)
 def get_cached_username():
-    return cache.get('current_user') if cache.get('current_user') else False
+    return mc.get('current_user') if cache.get('current_user') else False
 def cache_bot_img(bot_say, imageUrl):
     cache.set('imageUrl', imageUrl, timeout=60)
     return cache.set('bot_say', bot_say, timeout=60)
