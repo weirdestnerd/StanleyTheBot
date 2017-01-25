@@ -1,6 +1,6 @@
 import os
 from flask import Flask, render_template, request
-from werkzeug.contrib.cache import SimpleCache
+from werkzeug.contrib.cache import MemcachedCache
 from pattern.en import wordnet, pluralize, singularize
 from watson_developer_cloud import VisualRecognitionV3
 
@@ -9,7 +9,7 @@ visual_recognition = VisualRecognitionV3('2016-05-20', api_key='c6f25fcfd00c3ad0
 
 app = Flask(__name__)
 #app.config.from_object(os.environ['APP_SETTINGS'])
-cache = SimpleCache()
+cache = MemcachedCache(['127.0.0.1:11211'])
 
 #TODO: cache user's name.
 def cache_username(user_name):
