@@ -1,6 +1,6 @@
 import os
 from flask import Flask, render_template, request
-from werkzeug.contrib.cache import MemcachedCache
+from werkzeug.contrib.cache import SimpleCache
 from pattern.en import wordnet, pluralize, singularize
 from watson_developer_cloud import VisualRecognitionV3
 
@@ -9,13 +9,13 @@ visual_recognition = VisualRecognitionV3('2016-05-20', api_key='c6f25fcfd00c3ad0
 
 app = Flask(__name__)
 #app.config.from_object(os.environ['APP_SETTINGS'])
-#cache = MemcachedCache(['127.0.0.1:11211'])
+cache = SimpleCache()
 
 #TODO: cache user's name.
 def cache_username(user_name):
-    return mc.set('current_user', user_name, timeout=60)
+    return cache.set('current_user', user_name, timeout=60)
 def get_cached_username():
-    return mc.get('current_user') if cache.get('current_user') else False
+    return cache.get('current_user') if cache.get('current_user') else False
 def cache_bot_img(bot_say, imageUrl):
     cache.set('imageUrl', imageUrl, timeout=60)
     return cache.set('bot_say', bot_say, timeout=60)
@@ -61,7 +61,7 @@ def img_upload():
     #IBM Watson checks for faces in the photo
     result_from_IBM_Watson = visual_recognition.detect_faces(images_url=imageUrl)
     #if faces are found in the image
-    if 'faces' in result_from_IBM_Watson['images'][0]:
+    if 'faces' in result_from_IBM_Watson['images'][0] and result_from_IBM_Watson['images'][0]['faces']:
         bot_say = "I can see " + parse_faces(result_from_IBM_Watson['images'][0]['faces']) + " in this photo."
     #if there was an error with the image
     elif 'error' in result_from_IBM_Watson['images'][0]:
