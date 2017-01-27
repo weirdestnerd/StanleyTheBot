@@ -61,7 +61,8 @@
         document.getElementById('analyize').classList.remove('disabled')
         document.getElementById('loader').classList.add('hide')
       }).catch(err => {
-        if (err.code == 'storage/object_not_found') {
+        if (err.code === 'storage/object-not-found') {
+          imageRef = firebase.storage().ref('images/' + image.name)
           //upload chosen image to firebase storage
           uploadTask = imageRef.put(image)
           //while the image is uploading
