@@ -31,19 +31,19 @@ def index():
 
 @app.route("/compliment")
 def say_thanks():
-    if not get_cached_username():
+    if get_cached_username() == False:
         return index()
     return render_template('thanks.html', bot_say = get_bot_say(), imgURL = get_image_url(), user_name = get_cached_username())
 @app.route("/anotherone")
 def anotherone():
-    if not get_cached_username():
+    if get_cached_username() == False:
         return index()
     return render_template('anotherone.html', bot_say = get_bot_say(), imgURL = get_image_url(), user_name = get_cached_username())
 @app.route("/get_user_name", methods=['GET', 'POST'])
 def get_user_name():
     user_name = str(request.form['user_name'])
     cache_username(user_name)
-    if not get_cached_username():
+    if get_cached_username() == False:
         return index()
     return render_template('info.html', user_name = get_cached_username())
 
@@ -80,7 +80,7 @@ def img_upload():
             list_of_scores_and_classes = refine_classes(result_from_IBM_Watson['images'][0]['classifiers'][0]['classes'])
             bot_say = parse_classify(list_of_scores_and_classes)
     cache_bot_img(bot_say, imageUrl)
-    if not get_cached_username():
+    if get_cached_username() == False:
         return index()
     return render_template('analyze.html', bot_say = bot_say, imgURL=imageUrl, user_name = get_cached_username())
 
