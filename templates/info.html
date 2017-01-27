@@ -53,41 +53,40 @@
       image = e.target.files[0]
       //reference to firebase storage
       var storageRef = firebase.storage().ref('images/')
-      if (storageRef.child(image.name)) {
-        //show loading animation
-        document.getElementById('loader').classList.remove('hide')
-        storageRef.child(image.name).getDownloadURL().then(e => {
-          document.getElementById('hiddenUrl').value = e
-          //make button clickable
-          document.getElementById('analyize').classList.remove('disabled')
-          document.getElementById('loader').classList.add('hide')
-        })
-      }
-      else {
-        //upload chosen image to firebase storage
-        uploadTask = imageRef.put(image)
-        //while the image is uploading
-        uploadTask.on('state_changed', snapshot => {
-          //show loading animation
-          document.getElementById('loader').classList.remove('hide')
-          //get upload status
-          var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          //when upload is done
-          if (progress == 100) {
-            //remove the loading animation
-            document.getElementById('loader').classList.add('hide')
-          }
-        },
-        error => {//if there's an error
-        },//what to do when upload is done
-          function() {
-            console.log("done uploading");
-            //add the URL to the image to the hidden input
-            document.getElementById('hiddenUrl').value = uploadTask.snapshot.downloadURL
-            //make button clickable
-            document.getElementById('analyize').classList.remove('disabled')
+      //show loading animation
+      document.getElementById('loader').classList.remove('hide')
+      storageRef.child(image.name).getDownloadURL().then(e => {
+        document.getElementById('hiddenUrl').value = e
+        //make button clickable
+        document.getElementById('analyize').classList.remove('disabled')
+        document.getElementById('loader').classList.add('hide')
+      }).catch(err => {
+        if (err.code == 'storage/object_not_found') {
+          //upload chosen image to firebase storage
+          uploadTask = imageRef.put(image)
+          //while the image is uploading
+          uploadTask.on('state_changed', snapshot => {
+            //show loading animation
+            document.getElementById('loader').classList.remove('hide')
+            //get upload status
+            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            //when upload is done
+            if (progress == 100) {
+              //remove the loading animation
+              document.getElementById('loader').classList.add('hide')
+            }
+          },
+          error => {//if there's an error
+          },//what to do when upload is done
+            function() {
+              console.log("done uploading");
+              //add the URL to the image to the hidden input
+              document.getElementById('hiddenUrl').value = uploadTask.snapshot.downloadURL
+              //make button clickable
+              document.getElementById('analyize').classList.remove('disabled')
           })
         }
+      })
     })
     //show processing
     document.getElementById('analyize').addEventListener('click', function() {
