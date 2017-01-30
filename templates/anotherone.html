@@ -82,45 +82,4 @@
 </script>
 {% endblock %}
 
-{% endblock %}
-{% block example%}
-<div class="example">
-  <div class="row">
-    <div class="col s12 m4 l4">
-      <div class="card">
-       <div class="card-image">
-         <img src="{{ url_for('static', filename='img/blackguy.jpg') }}">
-         <span class="card-title"></span>
-       </div>
-       <div class="card-content">
-         <p>I can see a young guy in this photo.</p>
-       </div>
-     </div>
-    </div>
-    <div class="col s12 m4 l4">
-      <div class="card">
-       <div class="card-image">
-         <img src="{{ url_for('static', filename='img/barrackobama.jpg') }}">
-         <span class="card-title"></span>
-       </div>
-       <div class="card-content">
-         <p>I can see Barack Obama in this photo.</p>
-       </div>
-     </div>
-    </div>
-    <div class="col s12 m4 l4">
-      <div class="card">
-       <div class="card-image">
-         <img src="{{ url_for('static', filename='img/computer.jpg') }}">
-         <span class="card-title"></span>
-       </div>
-       <div class="card-content">
-         <p>Here's what I see this photo: computer, machine, device.</p>
-       </div>
-     </div>
-    </div>
-  </div>
-</div>
-{% endblock %}
-
-{% block user_response %}{% endblock %}
+{% endblock %}{% block user_response %}{% endblock %}
