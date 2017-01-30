@@ -28,9 +28,10 @@ def get_image_url():
 def cache_control(res):
     res.cache_control.public = True
     return res
-    
+
 @app.route("/")
 def index():
+    cache.clear()
     #show welcome page
     return render_template('intro.html')
 
