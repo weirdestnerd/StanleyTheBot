@@ -24,6 +24,11 @@ def get_bot_say():
 def get_image_url():
     return cache.get('imageUrl')
 
+@app.after_request
+def cache_control(res):
+    res.cache_control.public = True
+    return res
+    
 @app.route("/")
 def index():
     #show welcome page
