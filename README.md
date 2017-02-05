@@ -9,11 +9,11 @@ The app simply asks for the name of the user, then asks the user for a photo to 
 I've always had great interest in Artificial Intelligence and I have strive to thrive in this field. In my endeavor to understand A.I., I realized that Python is one of the major programming languages in the field. So, I decided to learn Python >at least the basics. After getting a comfortable with the basics of Python, I wanted to build a simple program with Python that relates to A.I. Thereby, I created StanleyTheBot.
 
 ## backbone
-The base of StanleyTheBot is **Flask** and **Jinja**. **Flask** framework handles the dynamicity of the app: redirection of pages, variables in HTMl.
+The base of StanleyTheBot is **Flask** and **Jinja**. **Flask** framework handles the dynamicity of the app: redirection of pages, variables in HTML.
 Images are classified with **IBM Watson Visual Recognition API**.
 **Firebase** storage is used to store the images uploaded.
 UI is done with **MaterializeCSS**.
-StanleyTheBot is deployed to **Heroku**.
+StanleyTheBot is deployed to **Heroku** [StanleyTheBot.herokuapp.com](https://StanleyTheBot.herokuapp.com).
 
 ## walkthrough
 The main python file that controls the app is `index.py`.
