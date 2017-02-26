@@ -50,6 +50,11 @@
     imageSubmit.addEventListener('change', e => {
       //get the image chosen
       image = e.target.files[0]
+      
+      if (image.size > 2000000) {
+        console.log(image.size);
+        $('document').ready(Materialize.toast('Your image is large and might take a while to upload', 5000));
+      }
       //reference to firebase storage
       var imageRef = firebase.storage().ref('images/' + image.name)
       //upload chosen image to firebase storage

@@ -62,6 +62,10 @@
         document.getElementById('loader').classList.add('hide')
       }).catch(err => {
         if (err.code === 'storage/object-not-found') {
+          if (image.size > 2000000) {
+            console.log(image.size);
+            $('document').ready(Materialize.toast('Your image is large and might take a while to upload', 5000));
+          }
           imageRef = firebase.storage().ref('images/' + image.name)
           //upload chosen image to firebase storage
           uploadTask = imageRef.put(image)
