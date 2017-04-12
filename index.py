@@ -13,12 +13,12 @@ cache = SimpleCache()
 
 #TODO: cache user's name.
 def cache_username(user_name):
-    return cache.set('current_user', user_name, timeout=60)
+    return cache.set('current_user', user_name, timeout=300)
 def get_cached_username():
     return cache.get('current_user') if cache.get('current_user') else False
 def cache_bot_img(bot_say, imageUrl):
-    cache.set('imageUrl', imageUrl, timeout=60)
-    return cache.set('bot_say', bot_say, timeout=60)
+    cache.set('imageUrl', imageUrl, timeout=300)
+    return cache.set('bot_say', bot_say, timeout=300)
 def get_bot_say():
     return cache.get('bot_say')
 def get_image_url():
